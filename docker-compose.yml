@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # Laravel application container
+  laravel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    command: sh -c "php artisan queue:work"
+    ports:
+      - '8001:8000'
+    depends_on:
+      - redis-mail
+      - nginx-mail
+
+  # Redis service
+  redis-mail:
+    image: redis:latest
+    ports:
+      - '6380:6379'
+
+  nginx-mail:
+    image: nginx:1.19
+    volumes:
+      - ./public:/var/www/html
+    ports:
+      - "82:80"
