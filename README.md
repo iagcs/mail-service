@@ -1,26 +1,69 @@
-# Lumen PHP Framework
+# Mail Service
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+Este guia explica como configurar e executar esse projeto corretamente.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+Este microsserviço é dedicado exclusivamente ao envio de e-mails. Ele recebe mensagens diretamente do projeto principal "pic-pay" através do serviço de mensageria da AWS, o SQS, na fila "mail-queue", as quais contêm os dados da transação. Em seguida, o microsserviço utiliza esses dados para enviar um e-mail ao beneficiário da transação.
 
-> **Note:** In the years since releasing Lumen, PHP has made a variety of wonderful performance improvements. For this reason, along with the availability of [Laravel Octane](https://laravel.com/docs/octane), we no longer recommend that you begin new projects with Lumen. Instead, we recommend always beginning new projects with [Laravel](https://laravel.com).
+## Pré-requisitos
 
-## Official Documentation
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## Configuração
 
-## Contributing
+1. Clone o repositório da aplicação Lumen:
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repositorio-laravel.git
 
-## Security Vulnerabilities
+2. Navegue até o diretório da aplicação:
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+   ```bash
+   cd seu-repositorio-laravel
 
-## License
+3. Crie um arquivo .env na raiz do diretório da aplicação, baseando-se no arquivo .env.example. Você pode usar o comando cp no Unix/Linux ou copy no Windows:
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   ```bash
+   cp .env.example .env
+
+4. Edite o arquivo .env com as configurações de banco de dados e outras configurações específicas da sua aplicação, se necessário.
+
+### Fila
+
+- Para execucao da fila, estou usando o servico de mensageria da AWS, o SQS. Portanto é necessário seguir os seguintes passos:
+
+1. Crie um usuario administrativo na sua conta da AWS. Voce pode conferir como fazer isso [aqui](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-setting-up.html).
+
+2. Crie uma nova fila com o nome de "mail-queue".
+
+3. Adicione sua chave de acesso da aws na variavel AWS_ACCESS_KEY_ID.
+
+4. Adicione sua chave de acesso secreta da aws na variavel AWS_SECRET_ACCESS_KEY.
+
+5. Adicione a url (https://sqs.us-east-2.amazonaws.com/<account-id>) na variavel SQS_PREFIX
+
+6. Agora sua fila ja deve estar funcionando corretamente. Para monitorar o envio de JOB na fila, voce pode usar o seguinte comando:
+
+    ```bash
+   php artisan queue:listen sqs
+    
+## Execução
+
+1. Execute o comando Docker Compose para construir os contêineres e iniciar a aplicação:
+
+   ```bash
+   docker-compose up -d --build
+
+2. Após a construção e inicialização dos contêineres, você pode acessar a aplicação em seu navegador web através do seguinte endereço:
+
+    ```bash
+   http://localhost:8001
+
+3. Para entrar no bash do projeto com o docker, execute o seguinte comando:
+
+    ```bash
+   docker exec -it pic-pay_laravel /bin/sh
+   
+   ou
+   
+   docker exec -it <id-container-aplicacao> /bin/sh
