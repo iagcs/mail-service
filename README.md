@@ -2,7 +2,7 @@
 
 Este guia explica como configurar e executar esse projeto corretamente.
 
-Este microsserviço é dedicado exclusivamente ao envio de e-mails. Ele recebe mensagens diretamente do projeto principal "pic-pay" através do serviço de mensageria da AWS, o SQS, na fila "mail-queue", as quais contêm os dados da transação. Em seguida, o microsserviço utiliza esses dados para enviar um e-mail ao beneficiário da transação.
+Este microsserviço é dedicado exclusivamente ao envio de e-mails. Ele recebe mensagens diretamente do projeto principal "banco-digital" através do serviço de mensageria da AWS, o SQS, na fila "mail-queue", as quais contêm os dados da transação. Em seguida, o microsserviço utiliza esses dados para enviar um e-mail ao beneficiário da transação.
 
 ## Pré-requisitos
 
