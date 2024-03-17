@@ -62,7 +62,7 @@ Este microsserviço é dedicado exclusivamente ao envio de e-mails. Ele recebe m
 3. Para entrar no bash do projeto com o docker, execute o seguinte comando:
 
     ```bash
-   docker exec -it pic-pay_laravel /bin/sh
+   docker exec -it mail-service_laravel /bin/sh
    
    ou
    
