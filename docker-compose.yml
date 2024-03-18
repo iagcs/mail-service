@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-    command: sh -c "php artisan queue:work"
+    command: sh -c "composer install && php -S 127.0.0.1:8001"
     ports:
       - '8001:8000'
     depends_on:

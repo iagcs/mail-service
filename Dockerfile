@@ -15,6 +15,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 WORKDIR /app
 COPY . /app
 
-RUN composer install
-
 EXPOSE 8001
