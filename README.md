@@ -28,6 +28,20 @@ Este microsserviço é dedicado exclusivamente ao envio de e-mails. Ele recebe m
 
 4. Edite o arquivo .env com as configurações de banco de dados e outras configurações específicas da sua aplicação, se necessário.
 
+### Mail
+
+- Para envio correto do email, configure as variaveis de mail:
+
+    ```dotenv
+    MAIL_MAILER=
+    MAIL_HOST=
+    MAIL_PORT=
+    MAIL_USERNAME=
+    MAIL_PASSWORD=
+    MAIL_ENCRYPTION=tls
+    MAIL_FROM_ADDRESS=
+    MAIL_FROM_NAME="${APP_NAME}"
+
 ### Fila
 
 - Para execucao da fila, estou usando o servico de mensageria da AWS, o SQS. Portanto é necessário seguir os seguintes passos:
